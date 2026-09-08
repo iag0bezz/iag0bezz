@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404, iago@portfolio</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23161310'/%3E%3Ctext x='8' y='42' font-family='monospace' font-size='26' font-weight='700' fill='%23cc9c65'%3E%3E_%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+<script>
+  (function(){
+    try{
+      var saved = localStorage.getItem('ib_theme');
+      document.documentElement.setAttribute('data-theme', saved === 'light' ? 'light' : 'dark');
+    }catch(e){ document.documentElement.setAttribute('data-theme','dark'); }
+  })();
+</script>
+<style>
+  :root{
+    --bg:#161310; --ink:#dcd0bc; --ink-dim:#8f8271;
+    --amber:#cc9c65; --amber-line:#332a1e; --err:#c17b70;
+    --font:'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+    color-scheme: dark;
+  }
+  :root[data-theme="light"]{
+    --bg:#f3ecda; --ink:#2b2116; --ink-dim:#6b5c46;
+    --amber:#8a5a12; --amber-line:#cbb98c; --err:#a83b30;
+    color-scheme: light;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:var(--font);
+    font-size:15.5px;line-height:1.8;display:flex;align-items:center;justify-content:center;
+    padding:24px;-webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--amber);text-decoration:none;border-bottom:1px dashed var(--amber)}
+  a:hover{text-decoration:none;opacity:.8}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+  .box{max-width:560px;width:100%}
+  .path{color:var(--amber);font-weight:600}
+  .err{color:var(--err)}
+  .dim{color:var(--ink-dim)}
+  p{margin:6px 0}
+  @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+  .cursor{display:inline-block;width:.55em;height:1em;background:var(--amber);vertical-align:text-bottom;animation:blink 1s step-end infinite}
+  @media (prefers-reduced-motion: reduce){ .cursor{animation:none} }
+</style>
+</head>
+<body>
+<div class="box">
+  <p><span class="path">iago@portfolio:~$</span> cd <span id="reqpath">essa-pagina</span></p>
+  <p class="err">bash: cd: no such file or directory (404)</p>
+  <p>&nbsp;</p>
+  <p class="dim">a pagina que voce procura nao existe ou foi movida.</p>
+  <p><span class="path">iago@portfolio:~$</span> <a href="./">cd ~</a> <span class="cursor"></span></p>
+</div>
+<script>
+  try{
+    var seg = decodeURIComponent(location.pathname.split('/').filter(Boolean).pop() || 'essa-pagina');
+    document.getElementById('reqpath').textContent = seg;
+  }catch(e){}
+</script>
+</body>
+</html>

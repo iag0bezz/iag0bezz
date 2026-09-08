@@ -5,7 +5,7 @@
 Desenvolvedor focado em **backend, segurança defensiva e automação**.
 Construo desde serviços Windows de baixo nível até plataformas web completas.
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-1f9d55?style=for-the-badge&logo=googlechrome&logoColor=white)](https://iag0bezz.github.io)
+[![Portfolio](https://img.shields.io/badge/Portfolio-1f9d55?style=for-the-badge&logo=googlechrome&logoColor=white)](https://iag0bezz.github.io/iag0bezz/)
 [![Gmail](https://img.shields.io/badge/Gmail-1f9d55?style=for-the-badge&logo=gmail&logoColor=white)](mailto:iago.beserra1@gmail.com)
 [![GitHub](https://img.shields.io/badge/GitHub-1f9d55?style=for-the-badge&logo=github&logoColor=white)](https://github.com/iag0bezz)
 
