@@ -22,27 +22,38 @@ Construo desde serviços Windows de baixo nível até plataformas web completas.
 ![Stars](https://img.shields.io/github/stars/iag0bezz/Anti-Grabber?style=flat-square&color=1f9d55)
 
 Serviço Windows de segurança defensiva contra **grabbers**, malware que rouba
-token de sessão do Discord, credenciais da Steam e dados de outros apps.
-Detecção 100% por metadado e comportamento — qual processo abriu qual conexão,
-pra qual domínio — via [WinDivert](https://reqrypt.org/windivert.html), sem
-MITM e sem telemetria. 100% offline, sem login, sem conta, sem nuvem.
+token de sessão do Discord, credenciais da Steam e dados de outros apps. A
+detecção é 100% baseada em metadado e comportamento: qual processo abriu qual
+conexão, para qual domínio, usando o [WinDivert](https://reqrypt.org/windivert.html),
+sem MITM e sem telemetria. Roda 100% offline, sem login, sem conta e sem nuvem.
 
-Stack: **C# / .NET 8** — serviço Windows (`AntiGrabberService`) + tray nativo
-(WinForms host + **WebView2**, renderizando a UI em HTML/Alpine.js embutido,
-sem Electron nem runtime Node em produção) + notificações toast nativas do
-Windows. Instalador único via Inno Setup, releases automáticos por GitHub
-Actions a cada tag.
+Stack: **C# / .NET 8**, serviço Windows (`AntiGrabberService`) mais tray nativo
+(host WinForms com **WebView2**, renderizando a UI em HTML/Alpine.js embutido,
+sem Electron nem runtime Node em produção) e notificações toast nativas do
+Windows. Instalador único via Inno Setup, com releases automáticos pelo
+GitHub Actions a cada tag.
 
 ### Rexie Auth
 
 ![Node.js](https://img.shields.io/badge/Node.js-1f9d55?style=flat-square)
 ![Status](https://img.shields.io/badge/repo-privado-eceeed?style=flat-square&color=5f6864)
 
-Sistema de licenças para servidores FiveM: Discord Bot, API e painel web num
-monorepo Node.js (`apps/api`, `apps/bot`, `apps/web`), com MariaDB e deploy
-via Docker e PM2.
+Plataforma completa de venda e licenciamento de scripts para servidores
+FiveM. Monorepo Node.js com três apps (`apps/api`, `apps/bot`, `apps/web`),
+banco MariaDB e deploy via Docker e PM2.
 
-### Skylla — SaaS de gestão para restaurantes
+Funcionalidades: loja com catálogo de produtos e pacotes, carrinho, cupom de
+desconto e checkout via Pix (gateway Efí); central de documentação com
+busca por produto; avaliações e changelog de cada produto; licenciamento com
+reset de HWID e parcelamento; painel admin completo (produtos, pedidos,
+cupons, avaliações, pacotes, clientes, licenças, backup e logs); campanhas de
+broadcast para clientes no Discord; e um bot Discord com comandos próprios
+para criar, listar, consultar e gerenciar licença direto no servidor. A API
+expõe validação, heartbeat e checagem de atualização para o script consumir
+em tempo de execução, além de jobs recorrentes para expiração de pedido,
+retenção de log, backup, licença perto de vencer e lembrete de parcela.
+
+### Skylla, SaaS de gestão para restaurantes
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-1f9d55?style=flat-square)
 ![Status](https://img.shields.io/badge/repo-privado-eceeed?style=flat-square&color=5f6864)
@@ -54,8 +65,7 @@ upload de imagem (MinIO/S3), pedidos com baixa automática de estoque e
 financeiro, estoque com ficha técnica e conversão de unidades, compras com
 recebimento parcial e rateio de frete, financeiro com CMV e fluxo de caixa,
 inventário físico, auditoria e um módulo de inteligência que gera previsão de
-reabastecimento e insights, tudo com trilha de auditoria e regras de negócio
-isoladas da camada HTTP.
+reabastecimento e insights, com regras de negócio isoladas da camada HTTP.
 
 ## Stack
 
@@ -72,4 +82,4 @@ isoladas da camada HTTP.
   <img align="center" alt="MySQL" height="32" width="32" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original.svg">
 </div>
 
-<sub>Backend: C#/.NET, Node.js/TypeScript, Fastify, Prisma · Frontend: React, Next.js · Infra: Docker, WebView2, WinDivert</sub>
+<sub>Backend: C#/.NET, Node.js/TypeScript, Fastify, Prisma. Frontend: React, Next.js. Infra: Docker, WebView2, WinDivert.</sub>
