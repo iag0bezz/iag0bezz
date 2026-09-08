@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iago Beserra, desenvolvedor backend e segurança</title>
+<meta name="description" content="Desenvolvedor focado em backend, segurança defensiva e automação. C# .NET, Node.js, TypeScript, React. Disponível para novos projetos.">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 4 8 13v16c0 16.5 10.4 27.6 24 31 13.6-3.4 24-14.5 24-31V13L32 4Z' fill='%231f9d55'/%3E%3Cpath d='M21 32.5 28.5 40 44 23' fill='none' stroke='%23fff' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Iago Beserra">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://iag0bezz.github.io/">
+<meta property="og:title" content="Iago Beserra, desenvolvedor backend e segurança">
+<meta property="og:description" content="Desenvolvedor focado em backend, segurança defensiva e automação. C# .NET, Node.js, TypeScript, React. Disponível para novos projetos.">
+<meta name="twitter:card" content="summary">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+  (function(){
+    try{
+      var saved = localStorage.getItem('ib_theme');
+      var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    }catch(e){}
+  })();
+</script>
+<style>
+
+  :root{
+    --bg:#ffffff; --bg-alt:#f7f8f8; --surface:#ffffff; --surface-2:#f4f5f5;
+    --border:#e6e8e7; --text:#161a18; --text-dim:#5f6864;
+    --accent:#1f9d55; --accent-strong:#16803f; --accent-dim:#e3f6ea;
+    --idle:#9aa39d; --idle-dim:#eceeed;
+    --shadow:0 1px 2px rgba(20,30,25,.05), 0 18px 40px -12px rgba(20,30,25,.14);
+    --shadow-sm:0 1px 2px rgba(20,30,25,.06), 0 6px 16px -6px rgba(20,30,25,.1);
+    --radius-lg:22px; --radius:14px; --radius-sm:10px;
+    --font-head:'Space Grotesk', 'Segoe UI', sans-serif;
+    --font-body:'Inter', 'Segoe UI', sans-serif;
+    --font-mono:'JetBrains Mono', 'Cascadia Mono', Consolas, monospace;
+    color-scheme: light;
+  }
+  :root[data-theme="dark"]{
+      --bg:#0f1712; --bg-alt:#0b120e; --surface:#16211b; --surface-2:#1b2921;
+      --border:#263a2e; --text:#eaf3ee; --text-dim:#8fa197;
+      --accent:#35c46f; --accent-strong:#4ade80; --accent-dim:#16341f;
+      --idle:#64726a; --idle-dim:#202b25;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 18px 44px -14px rgba(0,0,0,.55);
+      --shadow-sm:0 1px 2px rgba(0,0,0,.3), 0 8px 20px -8px rgba(0,0,0,.45);
+      color-scheme: dark;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;position:relative}
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;z-index:1;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.02 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  a{color:inherit;text-decoration:none}
+  img,svg{display:block;max-width:100%}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px;position:relative;z-index:2}
+  ::selection{background:var(--accent);color:#fff}
+  h1,h2,h3,h4{font-family:var(--font-head);letter-spacing:-.02em;margin:0;font-weight:700}
+  p{margin:0}
+  .accent{color:var(--accent-strong)}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important}
+  }
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.16,.8,.3,1), transform .7s cubic-bezier(.16,.8,.3,1);transition-delay:var(--d,0ms)}
+  .reveal.in{opacity:1;transform:translateY(0)}
+
+  header{position:sticky;top:0;z-index:60;background:color-mix(in srgb, var(--bg) 82%, transparent);backdrop-filter:blur(14px) saturate(1.1);border-bottom:1px solid var(--border)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:68px;gap:10px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--font-head);font-weight:700;font-size:17px;flex-shrink:0}
+  .brand .mark{width:26px;height:26px}
+  @media(max-width:480px){.brand .brand-text{display:none}}
+  .navlinks{display:none;gap:30px;font-size:14.5px;color:var(--text-dim);font-weight:500}
+  .navlinks a{position:relative;padding:4px 0}
+  .navlinks a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1.5px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
+  .navlinks a:hover{color:var(--text)}
+  .navlinks a:hover::after{transform:scaleX(1)}
+  @media(min-width:800px){.navlinks{display:flex}}
+
+  .lang-switch{display:flex;gap:2px;background:var(--surface-2);border:1px solid var(--border);border-radius:9px;padding:2px;flex-shrink:0}
+  .lang-btn{border:none;background:transparent;color:var(--text-dim);font-size:11.5px;font-weight:700;padding:5px 8px;border-radius:7px;cursor:pointer;font-family:var(--font-body);transition:background-color .15s ease,color .15s ease}
+  .lang-btn:hover{color:var(--text)}
+  .lang-btn.active{background:var(--surface);color:var(--accent-strong);box-shadow:var(--shadow-sm)}
+
+  .theme-toggle{display:flex;align-items:center;justify-content:center;width:34px;height:34px;flex-shrink:0;background:var(--surface-2);border:1px solid var(--border);border-radius:9px;cursor:pointer;color:var(--text-dim);transition:background-color .15s ease,color .15s ease}
+  .theme-toggle:hover{color:var(--text)}
+  .theme-toggle svg{width:16px;height:16px}
+  .theme-toggle .icon-moon{display:none}
+  :root[data-theme="dark"] .theme-toggle .icon-sun{display:none}
+  :root[data-theme="dark"] .theme-toggle .icon-moon{display:block}
+
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:12px 22px;border-radius:11px;font-weight:600;font-size:14.5px;border:1px solid transparent;cursor:pointer;font-family:var(--font-body);transition:transform .18s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease, background-color .2s ease, border-color .2s ease;white-space:nowrap}
+  .btn svg{width:17px;height:17px;flex-shrink:0}
+  .btn:active{transform:scale(.96)}
+  .btn-primary{background:var(--accent-strong);color:#f2fbf6;box-shadow:var(--shadow-sm)}
+  .btn-primary:hover{background:var(--accent);transform:translateY(-2px)}
+  .btn-ghost{background:transparent;border-color:var(--border);color:var(--text)}
+  .btn-ghost:hover{background:var(--surface-2);border-color:var(--accent-dim)}
+  .btn-sm{padding:9px 16px;font-size:13.5px}
+
+  .hero{padding:76px 0 40px;overflow:visible}
+  .hero-grid{display:grid;grid-template-columns:1fr;gap:56px;align-items:center}
+  @media(min-width:960px){.hero-grid{grid-template-columns:1.05fr .95fr;gap:32px}}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:600;color:var(--accent-strong);text-transform:uppercase;letter-spacing:.07em;margin-bottom:22px}
+  @keyframes pulse-ring{0%{transform:scale(.5);opacity:.7}100%{transform:scale(2.4);opacity:0}}
+  h1.headline{font-size:clamp(32px,4.6vw,50px);line-height:1.12;max-width:620px}
+  .hero p.lede{margin-top:22px;color:var(--text-dim);font-size:17.5px;max-width:520px}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+  .trust-row{margin-top:26px;display:flex;flex-wrap:wrap;gap:18px;font-size:13px;color:var(--text-dim)}
+  .trust-row span{display:inline-flex;align-items:center;gap:7px}
+  .trust-row svg{width:15px;height:15px;color:var(--accent-strong);flex-shrink:0}
+
+  .visual-stage{position:relative;perspective:1400px}
+  .app-window{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow);overflow:hidden;width:100%;max-width:400px;margin:0 auto;transform:rotateY(-6deg) rotateX(3deg);transition:transform .3s ease;will-change:transform}
+  .aw-titlebar{display:flex;align-items:center;justify-content:space-between;padding:13px 14px;background:linear-gradient(180deg,var(--surface-2),transparent);border-bottom:1px solid var(--border)}
+  .aw-brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:13.5px}
+  .aw-brand .aw-shield{width:19px;height:19px;color:var(--accent)}
+  .aw-status{display:flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;color:var(--accent-strong);background:var(--accent-dim);border:1px solid var(--accent-dim);padding:4px 10px 4px 8px;border-radius:999px}
+  .aw-status .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-strong);position:relative}
+  .aw-status .dot::after{content:"";position:absolute;inset:-4px;border-radius:50%;background:inherit;opacity:.4;animation:pulse-ring 1.8s ease-out infinite}
+
+  .aw-body{display:flex;height:296px}
+  .aw-rail{width:70px;flex-shrink:0;border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:stretch;gap:3px;padding:10px 6px}
+  .aw-rail-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 2px;border-radius:9px;color:var(--text-dim);font-size:9px;font-weight:650}
+  .aw-rail-btn svg{width:16px;height:16px}
+  .aw-rail-btn.active{background:var(--accent-dim);color:var(--accent-strong)}
+  .aw-rail-spacer{flex:1}
+  .aw-rail-stat{display:flex;flex-direction:column;align-items:center;padding:7px 2px;border-radius:9px;background:var(--surface);border:1px solid var(--border)}
+  .aw-rail-stat strong{font-size:14px;font-family:var(--font-head)}
+  .aw-rail-stat span{font-size:8px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.4px}
+
+  .aw-feed{flex:1;padding:10px;overflow:hidden;display:flex;flex-direction:column;gap:6px}
+  .aw-row{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:9px;padding:8px 9px}
+  .aw-row .aw-ico{width:18px;height:18px;border-radius:50%;background:var(--accent-dim);color:var(--accent-strong);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .aw-row .aw-ico svg{width:10px;height:10px}
+  .aw-row .aw-msg{flex:1;min-width:0;font-size:10.5px;font-weight:600;line-height:1.35}
+
+  .float-card{position:absolute;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);padding:10px 13px;font-size:12px;font-weight:650;display:flex;align-items:center;gap:8px;animation:float-y 5s ease-in-out infinite}
+  .float-card svg{width:15px;height:15px;color:var(--accent-strong);flex-shrink:0}
+  .float-card.f1{top:6%;right:-6%;animation-delay:.2s}
+  .float-card.f2{bottom:8%;left:-8%;animation-delay:1.4s}
+  @keyframes float-y{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+  @media(max-width:1040px){.float-card.f1{right:0}.float-card.f2{left:0}}
+  @media(max-width:520px){.float-card{display:none}}
+
+  .stats-strip{padding:54px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .stats-grid{display:grid;grid-template-columns:1fr;gap:34px 24px}
+  @media(min-width:640px){.stats-grid{grid-template-columns:repeat(3,1fr)}}
+  .stat b{display:block;font-family:var(--font-head);font-size:clamp(28px,3.4vw,38px);color:var(--accent-strong);line-height:1}
+  .stat span{display:block;margin-top:8px;font-size:13.5px;color:var(--text-dim);max-width:280px}
+
+  section{padding:100px 0}
+  .head-row{display:flex;flex-direction:column;gap:14px;max-width:640px;margin-bottom:60px}
+  @media(min-width:760px){.head-row.split{flex-direction:row;justify-content:space-between;align-items:flex-end;max-width:none}}
+  .head-row h2{font-size:clamp(26px,3.6vw,36px)}
+  .head-row p{color:var(--text-dim);font-size:16px;max-width:460px}
+  .kicker{font-size:13px;font-weight:700;color:var(--accent-strong);text-transform:uppercase;letter-spacing:.08em}
+
+  .pipeline{position:relative}
+  .pipeline-line{display:none}
+  @media(min-width:900px){.pipeline-line{display:block;position:absolute;left:0;right:0;top:33px;height:2px}.pipeline-line svg{width:100%;height:2px;overflow:visible}}
+  .pipeline-nodes{display:grid;grid-template-columns:1fr;gap:34px;position:relative}
+  @media(min-width:900px){.pipeline-nodes{grid-template-columns:repeat(4,1fr);gap:24px}}
+  .pnode{text-align:left}
+  .pnode-badge{width:66px;height:66px;border-radius:50%;background:var(--surface);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;margin-bottom:20px;position:relative;z-index:2;box-shadow:var(--shadow-sm)}
+  .pnode-badge svg{width:26px;height:26px;color:var(--accent-strong)}
+  .pnode-badge .num{position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;background:var(--accent-strong);color:#f2fbf6;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--font-head)}
+  .pnode h4{font-size:16.5px;margin-bottom:8px}
+  .pnode p{font-size:14px;color:var(--text-dim);line-height:1.55}
+
+  .fgrid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
+  @media(min-width:680px){.fgrid{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:1020px){.fgrid{grid-template-columns:repeat(4,1fr)}}
+  .fcard{background:var(--surface);padding:30px 26px;transition:background-color .25s ease}
+  .fcard:hover{background:var(--surface-2)}
+  .fcard .ficon{width:42px;height:42px;border-radius:11px;background:var(--accent-dim);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+  .fcard .ficon svg{width:21px;height:21px;color:var(--accent-strong)}
+  .fcard h3{font-size:15.5px;margin-bottom:9px}
+  .fcard p{font-size:13.5px;color:var(--text-dim);line-height:1.6}
+
+  .demo-shell{display:grid;grid-template-columns:1fr;gap:44px;align-items:start}
+  @media(min-width:960px){.demo-shell{grid-template-columns:.8fr 1.2fr}}
+  .demo-tabs{display:flex;flex-direction:column;gap:6px}
+  .demo-tab{text-align:left;padding:16px 18px;border-radius:13px;border:1px solid transparent;display:flex;align-items:flex-start;gap:13px;color:var(--text-dim);cursor:pointer;background:transparent;font-family:var(--font-body);transition:background-color .2s ease, border-color .2s ease}
+  .demo-tab svg{width:19px;height:19px;flex-shrink:0;margin-top:2px}
+  .demo-tab b{display:block;color:var(--text);font-size:14.5px;margin-bottom:3px}
+  .demo-tab span{font-size:13px;line-height:1.5}
+  .demo-tab.active{background:var(--surface);border-color:var(--border);box-shadow:var(--shadow-sm);color:var(--accent-strong)}
+  .demo-tab.active svg{color:var(--accent-strong)}
+  .demo-tab.active b{color:var(--text)}
+  .demo-progress{height:2px;background:var(--border);border-radius:2px;margin-top:10px;overflow:hidden}
+  .demo-tab.active .demo-progress-fill{display:block}
+  .demo-progress-fill{display:none;height:100%;background:var(--accent);animation:demo-bar 5s linear}
+  @keyframes demo-bar{from{width:0%}to{width:100%}}
+
+  .demo-window{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow);overflow:hidden}
+  .demo-titlebar{display:flex;align-items:center;gap:9px;padding:14px 18px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,var(--surface-2),transparent)}
+  .demo-titlebar .aw-shield{width:20px;height:20px;color:var(--accent)}
+  .demo-titlebar b{font-size:14px}
+  .demo-panels{position:relative;min-height:280px}
+  .demo-panel{display:none;padding:18px;animation:demo-fade .35s ease}
+  .demo-panel.active{display:block}
+  @keyframes demo-fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  .demo-panel p.pdesc{font-size:13.5px;color:var(--text-dim);line-height:1.7;margin-bottom:16px}
+  .dp-chiprow{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+  .dp-chip{font-size:11px;font-weight:650;padding:5px 11px;border-radius:999px;background:var(--accent-dim);color:var(--accent-strong)}
+  .dp-chip.muted{background:var(--surface-2);color:var(--text-dim)}
+
+  .manifesto{border-left:3px solid var(--accent);padding-left:32px}
+  .manifesto p.big{font-family:var(--font-head);font-size:clamp(21px,2.6vw,30px);line-height:1.4;font-weight:600;max-width:820px}
+  .manifesto p.support{margin-top:22px;color:var(--text-dim);font-size:15.5px;max-width:640px;line-height:1.7}
+  .badge-row{display:flex;flex-wrap:wrap;gap:22px;margin-top:34px}
+  .badge-row span{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;color:var(--text)}
+  .badge-row svg{width:16px;height:16px;color:var(--accent-strong)}
+
+  .faq-list{max-width:760px}
+  .faq-item{border-bottom:1px solid var(--border)}
+  .faq-item:first-child{border-top:1px solid var(--border)}
+  .faq-item summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 4px;cursor:pointer;font-family:var(--font-head);font-weight:600;font-size:16.5px;list-style:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary .faq-plus{flex-shrink:0;width:22px;height:22px;position:relative}
+  .faq-item summary .faq-plus::before,.faq-item summary .faq-plus::after{content:"";position:absolute;background:var(--text-dim);border-radius:2px;transition:transform .25s ease}
+  .faq-item summary .faq-plus::before{left:4px;right:4px;top:10px;height:2px}
+  .faq-item summary .faq-plus::after{top:4px;bottom:4px;left:10px;width:2px}
+  .faq-item[open] summary .faq-plus::after{transform:rotate(90deg);opacity:0}
+  .faq-item[open] summary{color:var(--accent-strong)}
+  .faq-item p{padding:0 4px 22px;color:var(--text-dim);font-size:14.5px;line-height:1.7;max-width:660px}
+  .faq-item p a{color:var(--accent-strong);text-decoration:underline;text-underline-offset:2px}
+
+  .cta-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:60px 40px;text-align:center;position:relative;overflow:hidden}
+  .cta-panel::before{content:"";position:absolute;inset:0;background:radial-gradient(480px 220px at 50% -10%, var(--accent-dim), transparent 72%);pointer-events:none}
+  .cta-inner{position:relative}
+  .cta-panel h2{margin-bottom:12px}
+  .cta-panel p.sub{color:var(--text-dim);margin-bottom:34px;font-size:16px}
+  .cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .cta-note{margin-top:18px;font-size:13px;color:var(--text-dim)}
+  .cta-note b{color:var(--text)}
+
+  footer{border-top:1px solid var(--border);padding:40px 0}
+  .footer-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px}
+  .footer-brand{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--text-dim)}
+  .footer-brand .mark{width:18px;height:18px}
+  .footer-links{display:flex;gap:22px;font-size:13.5px;color:var(--text-dim)}
+  .footer-links a:hover{color:var(--text)}
+  .footer-note{margin-top:18px;font-size:12.5px;color:var(--text-dim);border-top:1px dashed var(--border);padding-top:18px}
+
+  ::-webkit-scrollbar{width:9px;height:9px}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:5px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="#top">
+        <svg class="mark" viewBox="0 0 64 64" fill="none"><path d="M32 4 8 13v16c0 16.5 10.4 27.6 24 31 13.6-3.4 24-14.5 24-31V13L32 4Z" fill="var(--accent)"/><path d="M21 32.5 28.5 40 44 23" stroke="var(--surface)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="brand-text">Iago Beserra</span>
+      </a>
+      <div class="navlinks">
+        <a href="#sobre" data-i18n="nav.about">Sobre</a>
+        <a href="#skills" data-i18n="nav.skills">Skills</a>
+        <a href="#projetos" data-i18n="nav.projects">Projetos</a>
+        <a href="#faq" data-i18n="nav.faq">Perguntas</a>
+        <a href="#contato" data-i18n="nav.contact">Contato</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <div class="lang-switch" id="lang-switch">
+          <button class="lang-btn active" data-lang="pt" type="button">PT</button>
+          <button class="lang-btn" data-lang="en" type="button">EN</button>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Alternar tema claro/escuro">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        </button>
+        <a class="btn btn-primary btn-sm" href="https://github.com/iag0bezz">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          <span data-i18n="nav.github">GitHub</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow" data-i18n="hero.eyebrow">Disponível para novos projetos</span>
+        <h1 class="headline" data-i18n="hero.headline">Construo o que roda por trás da tela <span class="accent">e continua rodando sozinho.</span></h1>
+        <p class="lede" data-i18n="hero.lede">Backend, segurança defensiva e automação. Do serviço Windows de baixo nível ao painel web em produção, prefiro a solução simples que aguenta o uso real a uma arquitetura bonita no papel.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#projetos">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2Z"/><path d="M14 2v6h6"/></svg>
+            <span data-i18n="hero.cta.projects">Ver projetos</span>
+          </a>
+          <a class="btn btn-ghost" href="#contato">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z" opacity="0"/><path d="m3 7 9 6 9-6"/><rect x="3" y="5" width="18" height="14" rx="2"/></svg>
+            <span data-i18n="hero.cta.contact">Falar comigo</span>
+          </a>
+        </div>
+        <div class="trust-row">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg><span data-i18n="trust.security">Backend com foco em segurança</span></span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg><span data-i18n="trust.oss">AntiGrabber é código aberto, MIT</span></span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="trust.stack">C# .NET, Node.js, TypeScript, React</span></span>
+        </div>
+      </div>
+
+      <div class="visual-stage">
+        <div class="app-window" id="app-window">
+          <div class="aw-titlebar">
+            <div class="aw-brand">
+              <svg class="aw-shield" viewBox="0 0 64 64" fill="none"><path d="M32 4 8 13v16c0 16.5 10.4 27.6 24 31 13.6-3.4 24-14.5 24-31V13L32 4Z" fill="currentColor"/><path d="M21 32.5 28.5 40 44 23" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              iago@dev
+            </div>
+            <div class="aw-status"><span class="dot"></span><span data-i18n="status.available">Disponível</span></div>
+          </div>
+          <div class="aw-body">
+            <nav class="aw-rail">
+              <div class="aw-rail-btn active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a7 7 0 0 1 14 0v1"/></svg>
+                <span data-i18n="nav.about">Sobre</span>
+              </div>
+              <div class="aw-rail-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11Z"/></svg>
+                <span data-i18n="nav.projects">Projetos</span>
+              </div>
+              <div class="aw-rail-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                <span data-i18n="nav.skills">Skills</span>
+              </div>
+              <div class="aw-rail-spacer"></div>
+              <div class="aw-rail-stat"><strong>3</strong><span data-i18n="rail.projects">Prod</span></div>
+            </nav>
+            <div class="aw-feed">
+              <div class="aw-row"><span class="aw-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="aw-msg" data-i18n="feed.1">Backend em C# e Node.js, do driver de rede ao painel web</span></div>
+              <div class="aw-row"><span class="aw-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="aw-msg" data-i18n="feed.2">3 projetos próprios em produção</span></div>
+              <div class="aw-row"><span class="aw-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="aw-msg" data-i18n="feed.3">Segurança e privacidade por padrão, não como extra</span></div>
+              <div class="aw-row"><span class="aw-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="aw-msg" data-i18n="feed.4">Código aberto sempre que o projeto permite</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="float-card f1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+          <span data-i18n="float.oss">Código aberto no GitHub</span>
+        </div>
+        <div class="float-card f2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span data-i18n="float.available">Disponível pra novos projetos</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats-strip">
+    <div class="wrap stats-grid">
+      <div class="stat reveal"><b data-count="3">0</b><span data-i18n="stat.projects">projetos próprios em produção, do serviço Windows ao SaaS multi-tenant</span></div>
+      <div class="stat reveal" style="--d:80ms"><b data-count="100" data-suffix="%">0%</b><span data-i18n="stat.oss">dos projetos pessoais com código aberto no GitHub</span></div>
+      <div class="stat reveal" style="--d:160ms"><b data-count="8">0</b><span data-i18n="stat.stack">tecnologias no dia a dia, do C# ao Docker</span></div>
+    </div>
+  </section>
+
+  <section id="sobre">
+    <div class="wrap">
+      <div class="head-row reveal">
+        <span class="kicker" data-i18n="how.kicker">Como eu trabalho</span>
+        <h2 data-i18n="how.title">Menos código, menos superfície de bug</h2>
+        <p data-i18n="how.sub">Prefiro a versão simples que funciona a uma abstração pronta para um requisito que talvez nunca apareça. Onde tem dado sensível ou dinheiro, o cuidado extra deixa de ser opcional.</p>
+      </div>
+
+      <div class="pipeline">
+        <div class="pipeline-line">
+          <svg viewBox="0 0 1000 2" preserveAspectRatio="none">
+            <line x1="60" y1="1" x2="940" y2="1" stroke="var(--border)" stroke-width="2"/>
+            <line id="pipeline-path" x1="60" y1="1" x2="940" y2="1" stroke="var(--accent)" stroke-width="2" stroke-dasharray="880" stroke-dashoffset="880"/>
+          </svg>
+        </div>
+        <div class="pipeline-nodes">
+          <div class="pnode reveal">
+            <div class="pnode-badge"><span class="num">1</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8" fill="currentColor"/></svg>
+            </div>
+            <h4 data-i18n="how.n1.title">Entende o problema</h4>
+            <p data-i18n="how.n1.body">Antes de escrever qualquer linha, mapeio o que precisa existir de verdade. O que é especulativo fica de fora.</p>
+          </div>
+          <div class="pnode reveal" style="--d:100ms">
+            <div class="pnode-badge"><span class="num">2</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2Z"/><path d="M14 2v6h6"/></svg>
+            </div>
+            <h4 data-i18n="how.n2.title">Arquiteta a solução</h4>
+            <p data-i18n="how.n2.body">Stack e estrutura pensadas pra manutenção, não pra impressionar. Contratos claros entre as partes.</p>
+          </div>
+          <div class="pnode reveal" style="--d:200ms">
+            <div class="pnode-badge"><span class="num">3</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5 10.7 15.2 16 9.5"/></svg>
+            </div>
+            <h4 data-i18n="how.n3.title">Constrói com testes</h4>
+            <p data-i18n="how.n3.body">Onde importa segurança ou dado sensível, tem teste. O resto fica simples de propósito, sem cobertura fingida.</p>
+          </div>
+          <div class="pnode reveal" style="--d:300ms">
+            <div class="pnode-badge"><span class="num">4</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+            </div>
+            <h4 data-i18n="how.n4.title">Documenta e entrega</h4>
+            <p data-i18n="how.n4.body">README e deploy que não dependem de mim pra rodar de novo. Quem chegar depois entende sem perguntar.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" style="background:var(--bg-alt)">
+    <div class="wrap">
+      <div class="head-row reveal">
+        <span class="kicker" data-i18n="skills.kicker">Skills</span>
+        <h2 data-i18n="skills.title">Stack do dia a dia</h2>
+        <p data-i18n="skills.sub">Do backend de baixo nível à interface que o usuário final vê.</p>
+      </div>
+
+      <div class="fgrid reveal">
+        <div class="fcard">
+          <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg></div>
+          <h3>C# &amp; .NET</h3>
+          <p data-i18n="skill.f1">Serviços Windows, workers e integração de baixo nível com o sistema operacional.</p>
+        </div>
+        <div class="fcard">
+          <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg></div>
+          <h3>TypeScript &amp; Node.js</h3>
+          <p data-i18n="skill.f2">APIs, bots de Discord e serviços que precisam ficar de pé sozinhos em produção.</p>
+        </div>
+        <div class="fcard">
+          <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2.5"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="14" x2="14" y2="14"/></svg></div>
+          <h3>React &amp; Next.js</h3>
+          <p data-i18n="skill.f3">Painéis e dashboards com dados reais, gráficos e estado sincronizado com o backend.</p>
+        </div>
+        <div class="fcard">
+          <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+          <h3 data-i18n="skill.h4">Docker &amp; infra</h3>
+          <p data-i18n="skill.f4">Deploy reprodutível, docker-compose por ambiente, sem depender de configurar máquina na mão.</p>
+        </div>
+        <div class="fcard">
+          <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+          <h3 data-i18n="skill.h5">PostgreSQL, MySQL &amp; MariaDB</h3>
+          <p data-i18n="skill.f5">Modelagem de dados pra sistema que precisa aguentar auditoria e crescer sem reescrever tudo.</p>
+        </div>
+        <div class="fcard">
+          <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+          <h3 data-i18n="skill.h6">Electron</h3>
+          <p data-i18n="skill.f6">Apps desktop leves, comunicando com serviço nativo via named pipe ou IPC.</p>
+        </div>
+        <div class="fcard">
+          <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4M6 8l-4 4 4 4M14.5 4l-5 16"/></svg></div>
+          <h3 data-i18n="skill.h7">APIs REST &amp; Discord Bots</h3>
+          <p data-i18n="skill.f7">Integrações entre sistemas, webhooks e bots que fazem parte do fluxo de negócio, não só brinquedo.</p>
+        </div>
+        <div class="fcard">
+          <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></div>
+          <h3 data-i18n="skill.h8">Segurança &amp; redes de baixo nível</h3>
+          <p data-i18n="skill.f8">Interceptação de tráfego, análise de comportamento e decisões baseadas em metadado, não em conteúdo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projetos">
+    <div class="wrap">
+      <div class="head-row reveal">
+        <span class="kicker" data-i18n="proj.kicker">Projetos</span>
+        <h2 data-i18n="proj.title">O que eu já construí de ponta a ponta</h2>
+        <p data-i18n="proj.sub">Três projetos, três problemas diferentes: segurança de sistema, licenciamento e SaaS de gestão.</p>
+      </div>
+
+      <div class="demo-shell reveal">
+        <div class="demo-tabs" id="demo-tabs">
+          <button class="demo-tab active" data-tab="antigrabber">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+            <span><b>AntiGrabber</b><span data-i18n="proj.tab1.desc">Segurança defensiva contra roubo de sessão</span></span>
+          </button>
+          <div class="demo-progress"><div class="demo-progress-fill"></div></div>
+          <button class="demo-tab" data-tab="rexie">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4M6 8l-4 4 4 4M14.5 4l-5 16"/></svg>
+            <span><b>Rexie Auth</b><span data-i18n="proj.tab2.desc">Licenciamento pra servidores FiveM</span></span>
+          </button>
+          <div class="demo-progress"><div class="demo-progress-fill"></div></div>
+          <button class="demo-tab" data-tab="skylla">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2.5"/><line x1="3" y1="9" x2="21" y2="9"/></svg>
+            <span><b>Skylla Platform</b><span data-i18n="proj.tab3.desc">SaaS de gestão pra restaurantes</span></span>
+          </button>
+          <div class="demo-progress"><div class="demo-progress-fill"></div></div>
+        </div>
+
+        <div class="demo-window">
+          <div class="demo-titlebar">
+            <svg class="aw-shield" viewBox="0 0 64 64" fill="none"><path d="M32 4 8 13v16c0 16.5 10.4 27.6 24 31 13.6-3.4 24-14.5 24-31V13L32 4Z" fill="currentColor"/><path d="M21 32.5 28.5 40 44 23" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <b id="proj-title">AntiGrabber</b>
+          </div>
+          <div class="demo-panels">
+            <div class="demo-panel active" data-panel="antigrabber">
+              <p class="pdesc" data-i18n="proj.antigrabber.desc">Serviço Windows de segurança defensiva contra grabbers, malware que rouba token de sessão do Discord e credenciais da Steam. Detecção 100% por metadado e comportamento, via WinDivert, sem MITM e sem telemetria.</p>
+              <div class="dp-chiprow">
+                <span class="dp-chip">C#</span><span class="dp-chip">.NET</span><span class="dp-chip">WinDivert</span><span class="dp-chip">Electron</span><span class="dp-chip">Windows Service</span>
+              </div>
+              <a class="btn btn-ghost btn-sm" href="https://github.com/iag0bezz/Anti-Grabber">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                <span data-i18n="proj.viewCode">Ver código</span>
+              </a>
+            </div>
+            <div class="demo-panel" data-panel="rexie">
+              <p class="pdesc" data-i18n="proj.rexie.desc">Sistema de licenças pra servidores FiveM com Discord Bot, API e painel web num monorepo Node.js, com MariaDB e deploy via Docker e PM2.</p>
+              <div class="dp-chiprow">
+                <span class="dp-chip">Node.js</span><span class="dp-chip">Discord Bot</span><span class="dp-chip">MariaDB</span><span class="dp-chip">Docker</span><span class="dp-chip">Monorepo</span>
+              </div>
+              <span class="dp-chip muted" data-i18n="proj.private">Projeto privado</span>
+            </div>
+            <div class="demo-panel" data-panel="skylla">
+              <p class="pdesc" data-i18n="proj.skylla.desc">SaaS de gestão pra restaurantes: estoque, compras, financeiro com CMV, pedidos e inteligência de reabastecimento. Backend Fastify com Prisma, frontend Next.js.</p>
+              <div class="dp-chiprow">
+                <span class="dp-chip">Fastify</span><span class="dp-chip">TypeScript</span><span class="dp-chip">Prisma</span><span class="dp-chip">PostgreSQL</span><span class="dp-chip">Next.js</span><span class="dp-chip">Docker</span>
+              </div>
+              <span class="dp-chip muted" data-i18n="proj.private">Projeto privado</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--bg-alt)">
+    <div class="wrap">
+      <div class="manifesto reveal">
+        <p class="big" data-i18n="manifesto.big">Código que ninguém precisa entender às 3 da manhã é objetivo, não sorte.</p>
+        <p class="support" data-i18n="manifesto.support">Prefiro entregar a versão simples que funciona a uma abstração pronta pra um requisito que talvez nunca apareça. Segurança e dado sensível são a exceção: aí o cuidado extra sempre faz parte do escopo, nunca é opcional.</p>
+        <div class="badge-row">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l2-6 4 12 2-6h4"/></svg><span data-i18n="manifesto.b1">Menos é mais</span></span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span data-i18n="manifesto.b2">Sem telemetria por padrão</span></span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2Z"/><path d="M14 2v6h6"/></svg><span data-i18n="manifesto.b3">Documentação que orienta</span></span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5 10.7 15.2 16 9.5"/></svg><span data-i18n="manifesto.b4">Testes onde importa</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="head-row reveal">
+        <span class="kicker" data-i18n="faq.kicker">Perguntas frequentes</span>
+        <h2 data-i18n="faq.title">Antes de chamar</h2>
+      </div>
+      <div class="faq-list reveal">
+        <details class="faq-item">
+          <summary><span data-i18n="faq.q1">Você pega projetos freelance?</span><span class="faq-plus"></span></summary>
+          <p data-i18n="faq.a1">Sim, principalmente backend, automação e segurança. Manda os detalhes por e-mail que eu respondo dizendo se faz sentido eu entrar.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span data-i18n="faq.q2">Que tipo de projeto você não pega?</span><span class="faq-plus"></span></summary>
+          <p data-i18n="faq.a2">Nada que dependa de esconder dado do usuário ou burlar consentimento. Fora isso, converso sobre praticamente qualquer escopo de backend.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span data-i18n="faq.q3">Seus projetos são todos código aberto?</span><span class="faq-plus"></span></summary>
+          <p data-i18n="faq.a3">O AntiGrabber é, licença MIT. Projetos feitos pra cliente, como Rexie Auth e Skylla, ficam privados por padrão, como qualquer entrega de cliente.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span data-i18n="faq.q4">Como entro em contato?</span><span class="faq-plus"></span></summary>
+          <p data-i18n="faq.a4">E-mail é o canal mais confiável, veja abaixo. Costumo responder rápido.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section id="contato">
+    <div class="wrap">
+      <div class="cta-panel reveal">
+        <div class="cta-inner">
+          <h2 data-i18n="contact.title">Vamos conversar sobre seu projeto</h2>
+          <p class="sub" data-i18n="contact.sub">Conta o que você precisa e eu digo se faz sentido eu entrar. Sem enrolação.</p>
+          <div class="cta-actions">
+            <a class="btn btn-primary" href="mailto:iago.beserra1@gmail.com">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+              <span data-i18n="contact.email">Mandar e-mail</span>
+            </a>
+            <a class="btn btn-ghost" href="https://github.com/iag0bezz">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              <span data-i18n="nav.github">GitHub</span>
+            </a>
+          </div>
+          <div class="cta-note"><span data-i18n="contact.emailLabel">E-mail:</span> <b>iago.beserra1@gmail.com</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <div class="footer-brand">
+        <svg class="mark" viewBox="0 0 64 64" fill="none"><path d="M32 4 8 13v16c0 16.5 10.4 27.6 24 31 13.6-3.4 24-14.5 24-31V13L32 4Z" fill="var(--accent)"/><path d="M21 32.5 28.5 40 44 23" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span data-i18n="footer.brand">Iago Beserra, desenvolvedor backend</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/iag0bezz">GitHub</a>
+        <a href="mailto:iago.beserra1@gmail.com">Email</a>
+        <a href="https://github.com/iag0bezz/Anti-Grabber">AntiGrabber</a>
+      </div>
+    </div>
+    <p class="footer-note" data-i18n="footer.note">Site aberto no GitHub, feito pra ser simples de ler.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var I18N = {
+    en: {
+      'nav.about':'About','nav.skills':'Skills','nav.projects':'Projects','nav.faq':'FAQ','nav.contact':'Contact','nav.github':'GitHub',
+      'hero.eyebrow':'Available for new projects',
+      'hero.headline':'I build what runs behind the screen <span class="accent">and keeps running on its own.</span>',
+      'hero.lede':'Backend, defensive security and automation. From a low level Windows service to a web dashboard in production, I prefer the simple solution that handles real usage over an architecture that only looks good on paper.',
+      'hero.cta.projects':'View projects','hero.cta.contact':'Get in touch',
+      'trust.security':'Backend with a security focus','trust.oss':'AntiGrabber is open source, MIT','trust.stack':'C# .NET, Node.js, TypeScript, React',
+      'status.available':'Available',
+      'rail.projects':'Live',
+      'feed.1':'Backend in C# and Node.js, from the network driver to the web panel',
+      'feed.2':'3 personal projects in production',
+      'feed.3':'Security and privacy by default, not an afterthought',
+      'feed.4':'Open source whenever the project allows it',
+      'float.oss':'Open source on GitHub','float.available':'Available for new projects',
+      'stat.projects':'personal projects in production, from a Windows service to a multi-tenant SaaS',
+      'stat.oss':'of personal projects are open source on GitHub',
+      'stat.stack':'technologies in daily use, from C# to Docker',
+      'how.kicker':'How I work','how.title':'Less code, less surface for bugs',
+      'how.sub':'I would rather ship the simple version that works than a ready-made abstraction for a requirement that might never show up. Where sensitive data or money is involved, the extra care stops being optional.',
+      'how.n1.title':'Understand the problem','how.n1.body':'Before writing a line, I map out what actually needs to exist. Speculative stuff stays out.',
+      'how.n2.title':'Design the solution','how.n2.body':'Stack and structure chosen for maintenance, not to impress. Clear contracts between the parts.',
+      'how.n3.title':'Build with tests','how.n3.body':'Where security or sensitive data is involved, there is a test. Everything else stays simple on purpose, no fake coverage.',
+      'how.n4.title':'Document and ship','how.n4.body':'A README and a deploy that do not depend on me to run again. Whoever comes next understands without asking.',
+      'skills.kicker':'Skills','skills.title':'Day to day stack','skills.sub':'From low level backend to the interface the end user sees.',
+      'skill.f1':'Windows services, workers and low level integration with the operating system.',
+      'skill.f2':'APIs, Discord bots and services that need to stand on their own in production.',
+      'skill.f3':'Dashboards with real data, charts and state kept in sync with the backend.',
+      'skill.h4':'Docker & infra','skill.f4':'Reproducible deploys, environment specific docker-compose, no manual machine setup.',
+      'skill.h5':'PostgreSQL, MySQL & MariaDB','skill.f5':'Data modeling for systems that need to survive an audit and grow without a rewrite.',
+      'skill.h6':'Electron','skill.f6':'Lightweight desktop apps talking to a native service through a named pipe or IPC.',
+      'skill.h7':'REST APIs & Discord Bots','skill.f7':'Integrations between systems, webhooks and bots that are part of the business flow, not a toy.',
+      'skill.h8':'Security & low level networking','skill.f8':'Traffic interception, behavior analysis and decisions based on metadata, never on content.',
+      'proj.kicker':'Projects','proj.title':'What I have built end to end','proj.sub':'Three projects, three different problems: system security, licensing and management SaaS.',
+      'proj.tab1.desc':'Defensive security against session theft','proj.tab2.desc':'Licensing for FiveM servers','proj.tab3.desc':'Management SaaS for restaurants',
+      'proj.antigrabber.desc':'Windows defensive security service against grabbers, malware that steals Discord session tokens and Steam credentials. Detection is 100% metadata and behavior based, through WinDivert, no MITM, no telemetry.',
+      'proj.rexie.desc':'A licensing system for FiveM servers with a Discord Bot, API and web panel in a Node.js monorepo, with MariaDB and deployment via Docker and PM2.',
+      'proj.skylla.desc':'Management SaaS for restaurants: inventory, purchasing, finance with COGS, orders and restocking intelligence. Fastify backend with Prisma, Next.js frontend.',
+      'proj.viewCode':'View code','proj.private':'Private project',
+      'manifesto.big':'Code nobody needs to understand at 3am is a goal, not luck.',
+      'manifesto.support':'I would rather ship the simple version that works than a ready-made abstraction for a requirement that might never show up. Security and sensitive data are the exception: there, the extra care is always part of the scope, never optional.',
+      'manifesto.b1':'Less is more','manifesto.b2':'No telemetry by default','manifesto.b3':'Documentation that guides','manifesto.b4':'Tests where it matters',
+      'faq.kicker':'Frequently asked questions','faq.title':'Before reaching out',
+      'faq.q1':'Do you take freelance projects?','faq.a1':'Yes, mostly backend, automation and security. Send the details by email and I will tell you if it makes sense for me to join.',
+      'faq.q2':'What kind of project do you not take?','faq.a2':'Anything that relies on hiding data from users or bypassing consent. Outside of that, I will talk through pretty much any backend scope.',
+      'faq.q3':'Are all your projects open source?','faq.a3':'AntiGrabber is, MIT license. Client work, like Rexie Auth and Skylla, stays private by default, like any client deliverable.',
+      'faq.q4':'How do I get in touch?','faq.a4':'Email is the most reliable channel, see below. I usually reply fast.',
+      'contact.title':'Let\'s talk about your project','contact.sub':'Tell me what you need and I will tell you if it makes sense for me to join. No fluff.',
+      'contact.email':'Send an email','contact.emailLabel':'Email:',
+      'footer.brand':'Iago Beserra, backend developer','footer.note':'Site open on GitHub, built to be simple to read.'
+    }
+  };
+
+  var pt = {};
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var key = el.getAttribute('data-i18n');
+    if(!(key in pt)) pt[key] = el.innerHTML;
+  });
+
+  var currentLang = 'pt';
+
+  function applyLang(lang){
+    currentLang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var key = el.getAttribute('data-i18n');
+      var val = lang === 'pt' ? pt[key] : (I18N[lang] && (key in I18N[lang]) ? I18N[lang][key] : pt[key]);
+      if(val != null) el.innerHTML = val;
+    });
+    document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
+    document.querySelectorAll('.lang-btn').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-lang') === lang); });
+    try{ localStorage.setItem('ib_lang', lang); }catch(e){}
+  }
+
+  document.querySelectorAll('.lang-btn').forEach(function(b){
+    b.addEventListener('click', function(){ applyLang(b.getAttribute('data-lang')); });
+  });
+
+  var savedLang = 'pt';
+  try{ savedLang = localStorage.getItem('ib_lang') || 'pt'; }catch(e){}
+  if(savedLang === 'en') applyLang(savedLang);
+
+  var themeToggle = document.getElementById('theme-toggle');
+  if(themeToggle){
+    themeToggle.addEventListener('click', function(){
+      var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try{ localStorage.setItem('ib_theme', next); }catch(e){}
+    });
+  }
+
+  var targets = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window && !reduced){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.15});
+    targets.forEach(function(t){ io.observe(t); });
+  } else {
+    targets.forEach(function(t){ t.classList.add('in'); });
+  }
+
+  function animateCount(el){
+    var target = parseFloat(el.getAttribute('data-count'));
+    var suffix = el.getAttribute('data-suffix') || '';
+    if(reduced){ el.textContent = target + suffix; return; }
+    var start = null, dur = 1100;
+    function step(ts){
+      if(!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased) + suffix;
+      if(p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  var counters = document.querySelectorAll('[data-count]');
+  if('IntersectionObserver' in window){
+    var cio = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ animateCount(e.target); cio.unobserve(e.target); } });
+    }, {threshold:.6});
+    counters.forEach(function(c){ cio.observe(c); });
+  }
+
+  var pipelinePath = document.getElementById('pipeline-path');
+  if(pipelinePath){
+    var pio = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          pipelinePath.style.transition = reduced ? 'none' : 'stroke-dashoffset 1.4s cubic-bezier(.16,.8,.3,1)';
+          pipelinePath.style.strokeDashoffset = '0';
+          pio.unobserve(e.target);
+        }
+      });
+    }, {threshold:.4});
+    pio.observe(pipelinePath);
+  }
+
+  var stage = document.getElementById('app-window');
+  var stageWrap = document.querySelector('.visual-stage');
+  if(stage && stageWrap && window.matchMedia('(hover:hover)').matches && !reduced){
+    stageWrap.addEventListener('mousemove', function(ev){
+      var r = stageWrap.getBoundingClientRect();
+      var px = (ev.clientX - r.left) / r.width - .5;
+      var py = (ev.clientY - r.top) / r.height - .5;
+      stage.style.transform = 'rotateY(' + (-6 + px * 10) + 'deg) rotateX(' + (3 - py * 10) + 'deg)';
+    });
+    stageWrap.addEventListener('mouseleave', function(){
+      stage.style.transform = 'rotateY(-6deg) rotateX(3deg)';
+    });
+  }
+
+  var tabs = document.querySelectorAll('.demo-tab');
+  var panels = document.querySelectorAll('.demo-panel');
+  var titleEl = document.getElementById('proj-title');
+  var TITLES = {antigrabber:'AntiGrabber', rexie:'Rexie Auth', skylla:'Skylla Platform'};
+  var autoTimer = null;
+  var order = ['antigrabber','rexie','skylla'];
+  var oi = 0;
+
+  function setTab(name){
+    tabs.forEach(function(t){ t.classList.toggle('active', t.getAttribute('data-tab') === name); });
+    panels.forEach(function(p){ p.classList.toggle('active', p.getAttribute('data-panel') === name); });
+    if(titleEl) titleEl.textContent = TITLES[name] || '';
+    oi = order.indexOf(name);
+  }
+  function nextAuto(){ oi = (oi + 1) % order.length; setTab(order[oi]); }
+  function restartAuto(){
+    if(autoTimer) clearInterval(autoTimer);
+    if(!reduced) autoTimer = setInterval(nextAuto, 5500);
+  }
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){ setTab(t.getAttribute('data-tab')); restartAuto(); });
+  });
+  restartAuto();
+})();
+</script>
+
+</body>
+</html>
