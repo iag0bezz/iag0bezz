@@ -103,10 +103,13 @@
   .statusline .toolbtn{
     background:transparent;border:1px solid var(--amber-dim);color:var(--ink-dim);
     font-family:var(--font);font-size:11.5px;font-weight:500;padding:3px 8px;
-    cursor:pointer;flex-shrink:0;
+    cursor:pointer;flex-shrink:0;text-decoration:none;
   }
+  .statusline .toolbtn:hover{text-decoration:none}
   .statusline .toolbtn:hover{color:var(--amber);border-color:var(--amber)}
   .statusline .toolbtn[data-active="true"]{color:var(--amber);border-color:var(--amber)}
+  .statusline .cvbtn{background:var(--amber);color:var(--bg);border-color:var(--amber);font-weight:700}
+  .statusline .cvbtn:hover{color:var(--bg);opacity:.85}
   .langgroup{display:flex;gap:4px;flex-shrink:0}
 
   /* ---------- terminal column ---------- */
@@ -198,6 +201,7 @@
   </nav>
   <span class="spacer"></span>
   <span class="clock" id="clock">--:--</span>
+  <a class="toolbtn cvbtn" href="curriculo-iago-beserra.pdf" target="_blank" rel="noopener">cv</a>
   <div class="langgroup">
     <button class="toolbtn lang-btn" data-lang="pt" type="button" data-active="true">pt</button>
     <button class="toolbtn lang-btn" data-lang="en" type="button">en</button>
@@ -215,7 +219,7 @@
     <p class="hero-status" id="hero-status"></p>
     <div class="hero-links">
       <a href="#projetos" data-i18n="hero.viewprojects">./ver-projetos.sh</a>
-      <a href="curriculo-iago-beserra.pdf" download data-i18n="hero.resume">download curriculo.pdf</a>
+      <a href="curriculo-iago-beserra.pdf" target="_blank" rel="noopener" data-i18n="hero.resume">open curriculo.pdf</a>
       <a href="https://www.linkedin.com/in/iago-beserra-71747317a/" data-i18n="hero.linkedin">open linkedin.com/in/iago-beserra</a>
       <a href="https://github.com/iag0bezz" data-i18n="hero.github">open github.com/iag0bezz</a>
       <a href="mailto:iago.beserra1@gmail.com" data-i18n="hero.email">mail iago.beserra1@gmail.com</a>
@@ -325,7 +329,7 @@
       <a href="mailto:iago.beserra1@gmail.com">open mailto:iago.beserra1@gmail.com</a>
       <a href="https://www.linkedin.com/in/iago-beserra-71747317a/">open linkedin.com/in/iago-beserra</a>
       <a href="https://github.com/iag0bezz">open github.com/iag0bezz</a>
-      <a href="curriculo-iago-beserra.pdf" download data-i18n="hero.resume">download curriculo.pdf</a>
+      <a href="curriculo-iago-beserra.pdf" target="_blank" rel="noopener" data-i18n="hero.resume">open curriculo.pdf</a>
     </div>
   </section>
 
